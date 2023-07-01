@@ -12,6 +12,7 @@
   --gap-sm: .5em;
   --gap-med: 1em;
   --gap-lg: 2em;
+  color-scheme: light dark;
 }
 
 /* RESET */
@@ -41,4 +42,8 @@ img {
 button,
 input {
   font: inherit;
+}
+
+p {
+  overflow-wrap: break-word;
 }
