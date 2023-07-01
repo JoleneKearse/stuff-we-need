@@ -8,4 +8,37 @@
   --clr-accent-purple-900: #57337B;
   --clr-accent-green-100: #62BAAC;
   --clr-accent-green-500: #4B8078;
+  --border-radius: .35rem;
+  --gap-sm: .5em;
+  --gap-med: 1em;
+  --gap-lg: 2em;
+}
+
+/* RESET */
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  user-select: none;
+}
+
+body {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
 }
