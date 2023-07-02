@@ -8,10 +8,10 @@
   --clr-accent-purple-900: #57337B;
   --clr-accent-green-100: #62BAAC;
   --clr-accent-green-500: #4B8078;
-  --border-radius: .35rem;
-  --gap-sm: .5em;
-  --gap-med: 1em;
-  --gap-lg: 2em;
+  --border-radius: .5em;
+  --gap-sm: .75em;
+  --gap-med: 2em;
+  --gap-lg: 3em;
   color-scheme: light dark;
 }
 
@@ -25,8 +25,14 @@ html {
 }
 
 body {
-  font-size: 1.2rem;
+  background-color: var(--clr-neutral-100);
+  color: var(--clr-neutral-100);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
   line-height: 1.5;
+  letter-spacing: .15rem;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -41,9 +47,113 @@ img {
 
 button,
 input {
+  border: none;
   font: inherit;
+  text-align: center;
+  letter-spacing: .15rem;
+}
+
+button,
+.list-item {
+  cursor: pointer;
 }
 
 p {
   overflow-wrap: break-word;
+}
+
+/* TYPOGRAPHY */
+#groceryItem::placeholder {
+  color: var(--clr-neutral-500);
+}
+
+/* LAYOUT */
+.container {
+  max-width: 90%;
+  margin-inline: auto;
+  display: grid;
+  grid-template-areas: 
+    "img"
+    "form"
+    "list";
+  justify-items: center;
+  align-items: center;
+  gap: var(--gap-lg);
+}
+
+.hero,
+input,
+button,
+.list-item {
+  border-radius: var(--border-radius);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.hero {
+  grid-area: img;
+  object-fit: cover;
+}
+
+#inputForm {
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-med);
+}
+
+#list {
+  grid-area: list;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+#groceryItem,
+#addBtn {
+  width: 100%;
+  padding: .5em .25em;
+}
+
+#groceryItem {
+  background-color: var(--clr-accent-green-100);
+}
+
+#groceryItem:focus {
+  outline: .25rem solid var(--clr-accent-green-500);
+}
+
+#addBtn {
+  background-color: var(--clr-accent-green-500);
+  transition: all 5s ease-in-out;
+}
+
+#addBtn:focus,
+#addBtn:hover {
+  color: var(--clr-accent-green-100);
+  background-image: 
+    linear-gradient(
+      to right, 
+      var(--clr-accent-green-100), 
+      var(--clr-accent-green-500), 
+      var(--clr-accent-green-500), 
+      var(--clr-accent-green-500), 
+      var(--clr-accent-green-500), 
+      var(--clr-accent-green-500), 
+      var(--clr-accent-green-500), 
+      var(--clr-accent-green-500), 
+      var(--clr-accent-green-100));
+}
+
+.list-item {
+  padding: .75em .5em;
+  background-color: var(--clr-accent-purple-900);
+}
+
+.list-item:focus,
+.list-item:hover {
+  background-color: var(--clr-accent-purple-500);
+  box-shadow: none;
 }

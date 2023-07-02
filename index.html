@@ -4,8 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stuff We Need</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
+  <div class="container">
+    <img src="assets/shopping-pig.png" alt="purple fantasy pig walking down the produce aisel" class="hero"> 
+    <form id="inputForm">
+      <input type="text" name="grocery-item" id="groceryItem" placeholder="piggy fruit" spellcheck="true">
+      <button type="submit" id="addBtn">Add to List</button>
+    </form> 
+    <ul id="list">
+      <li class="list-item">a blue budgie</li>
+      <li class="list-item">piggy num nums</li>
+    </ul>  
+  </div>
 </body>
 </html>
