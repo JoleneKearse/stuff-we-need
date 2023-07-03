@@ -16,7 +16,7 @@ const groceriesInDB = ref(database, "groceries");
 
 const newItem = document.getElementById("groceryItem");
 const groceryList = document.getElementById("list");
-const listItems = document.querySelectorAll(".list-item");
+let draggedItem = null;
 
 document.getElementById("inputForm").addEventListener("submit", function (e) {
   e.preventDefault();
@@ -77,29 +77,29 @@ function clearInputField() {
   newItem.value = "";
 }
 
-groceryList.addEventListener("dragstart", (e) => {
-  if (e.target.classList.contains("list-item")) {
-    e.target.classList.add("dragging");
-  }
-});
+// groceryList.addEventListener("dragstart", (e) => {
+//   if (e.target.classList.contains("list-item")) {
+//     e.target.classList.add("dragging");
+//   }
+// });
 
-groceryList.addEventListener("dragend", (e) => {
-  if (e.target.classList.contains("list-item")) {
-    e.target.classList.remove("dragging");
-  }
-});
+// groceryList.addEventListener("dragend", (e) => {
+//   if (e.target.classList.contains("list-item")) {
+//     e.target.classList.remove("dragging");
+//   }
+// });
 
-groceryList.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  const afterElement = getDragAfterElement(groceryList, e.clientY);
-  const draggable = document.querySelector(".dragging");
+// groceryList.addEventListener("dragover", (e) => {
+//   e.preventDefault();
+//   const afterElement = getDragAfterElement(groceryList, e.clientY);
+//   const draggable = document.querySelector(".dragging");
 
-  if (afterElement == null) {
-    groceryList.appendChild(draggable);
-  } else {
-    groceryList.insertBefore(draggable, afterElement);
-  }
-});
+//   if (afterElement == null) {
+//     groceryList.appendChild(draggable);
+//   } else {
+//     groceryList.insertBefore(draggable, afterElement);
+//   }
+// });
 
 function getDragAfterElement(container, y) {
   const draggableElements = [
@@ -119,4 +119,52 @@ function getDragAfterElement(container, y) {
     },
     { offset: Number.NEGATIVE_INFINITY }
   ).element;
+}
+
+function handleDragStart(e) {
+  if (e.type === "touchstart" || e.button === 0) {
+    const target = e.targetTouches ? e.targetTouches[0].target : e.target;
+    if (target.classList.contains("list-item")) {
+      target.classList.add("dragging");
+      draggedItem = target;
+      console.log(draggedItem);
+    }
+  }
+}
+
+function handleDragEnd(e) {
+  if (e.type === "touchend" || e.button === 0) {
+    const target = e.targetTouches ? e.targetTouches[0].target : e.target;
+    if (target.classList.contains("list-item")) {
+      target.classList.remove("dragging");
+      draggedItem = null;
+    }
+  }
+}
+
+groceryList.addEventListener("mousedown", handleDragStart);
+groceryList.addEventListener("touchstart", handleDragStart);
+groceryList.addEventListener("mouseup", handleDragEnd);
+groceryList.addEventListener("touchend", handleDragEnd);
+groceryList.addEventListener("mousemove", (e) => {
+  e.preventDefault();
+  handleDragMove(e);
+});
+groceryList.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+  handleDragMove(e);
+});
+
+function handleDragMove(e) {
+  if (draggedItem) {
+    const clientY = e.targetTouches ? e.targetTouches[0].clientY : e.clientY;
+    const afterElement = getDragAfterElement(groceryList, clientY);
+    const draggable = document.querySelector(".dragging");
+
+    if (afterElement == null) {
+      groceryList.appendChild(draggable);
+    } else {
+      groceryList.insertBefore(draggable, afterElement);
+    }
+  }
 }
