@@ -79,7 +79,6 @@ function clearInputField() {
 
 groceryList.addEventListener("dragstart", (e) => {
   if (e.target.classList.contains("list-item")) {
-    console.log("dragging");
     e.target.classList.add("dragging");
   }
 });
@@ -91,30 +90,33 @@ groceryList.addEventListener("dragend", (e) => {
 });
 
 groceryList.addEventListener("dragover", (e) => {
-  e.preventDefault()
-  const afterElement = getDragAfterElement(groceryList, e.clientY)
-  const draggable = document.querySelector(".dragging")
+  e.preventDefault();
+  const afterElement = getDragAfterElement(groceryList, e.clientY);
+  const draggable = document.querySelector(".dragging");
 
   if (afterElement == null) {
-    groceryList.appendChild(draggable)
+    groceryList.appendChild(draggable);
   } else {
-    groceryList.insertBefore(draggable, afterElement)
+    groceryList.insertBefore(draggable, afterElement);
   }
-})
+});
 
 function getDragAfterElement(container, y) {
-  const draggableElements = [...container.querySelectorAll(".list-item:not(.dragging)")]
+  const draggableElements = [
+    ...container.querySelectorAll(".list-item:not(.dragging)"),
+  ];
 
-  return draggableElements.reduce((closest, child) => {
-    const box = child.getBoundingClientRect()
-    const offset = y - box.top - box.height / 2
+  return draggableElements.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
 
-    if (offset < 0 && offset > closest.offset) {
-      return {offset, element: child}
-    } else {
-      return closest
-    }
-  },
-  {offset: Number.NEGATIVE_INFINITY}
-  ).element 
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child };
+      } else {
+        return closest;
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY }
+  ).element;
 }
