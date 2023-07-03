@@ -149,6 +149,10 @@ button,
       var(--clr-accent-green-100));
 }
 
+.dragging {
+  opacity: 0.3;
+}
+
 .list-item {
   padding: .75em .5em;
   background-color: var(--clr-accent-purple-900);
@@ -165,6 +169,4 @@ button,
   width: 50vw;
 }
 
-.dragging {
-  opacity: 0;
-}
+
