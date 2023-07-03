@@ -81,7 +81,7 @@ p {
   gap: var(--gap-lg);
 }
 
-.hero,
+.emptyListImg,
 input,
 button,
 .list-item {
@@ -91,7 +91,8 @@ button,
 
 .hero {
   grid-area: img;
-  object-fit: cover;
+  width: 30vw;
+  filter: drop-shadow(.15em .15em  rgba(0, 0, 0, 0.25));
 }
 
 #inputForm {
@@ -127,7 +128,7 @@ button,
 
 #addBtn {
   background-color: var(--clr-accent-green-500);
-  transition: all 5s ease-in-out;
+  transition: all 1s ease-in-out;
 }
 
 #addBtn:focus,
@@ -150,10 +151,15 @@ button,
 .list-item {
   padding: .75em .5em;
   background-color: var(--clr-accent-purple-900);
+  transition: all 1s ease-in-out;
 }
 
 .list-item:focus,
 .list-item:hover {
   background-color: var(--clr-accent-purple-500);
   box-shadow: none;
+}
+
+.emptyListImg {
+  width: 50vw;
 }
