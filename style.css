@@ -25,7 +25,6 @@ html {
 }
 
 body {
-  /* background-color: var(--clr-neutral-100); */
   background-color: var(--clr-neutral-500);
   color: var(--clr-neutral-100);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -80,6 +79,7 @@ p {
   justify-items: center;
   align-items: center;
   gap: var(--gap-lg);
+  overflow-y: auto;
 }
 
 .emptyListImg,
