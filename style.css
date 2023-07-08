@@ -70,6 +70,7 @@ p {
 /* LAYOUT */
 .container {
   max-width: 90%;
+  height: 100%;
   margin-inline: auto;
   display: grid;
   grid-template-areas: 
