@@ -18,20 +18,6 @@ const newItem = document.getElementById("groceryItem");
 const groceryList = document.getElementById("list");
 let draggedItem = null;
 
-// enable offline capabilities
-firebase
-  .firestore()
-  .enablePersistence()
-  .catch(function (err) {
-    if (err.code === "failed-precondition") {
-      console.log(
-        "Multiple tabs open, persistence can only be enabled in one tab at a a time."
-      );
-    } else if (err.code === "unimplemented") {
-      console.log("The current browser does not support persistence.");
-    }
-  });
-
 // register service worker
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
@@ -79,10 +65,40 @@ onValue(groceriesInDB, function (snapshot) {
       let currentItem = item;
       addNewItems(currentItem);
     });
+    // store items in local storage for offline use
+    localStorage.setItem("groceries", JSON.stringify(snapshot.val()));
   } else {
     groceryList.innerHTML = `<img src="assets/shopping-pig.png" alt="purple fantasy pig walking down the produce aisel" class="emptyListImg">`;
+    // clear local storage if there are no groceries
+    localStorage.removeItem("groceries");
   }
 });
+
+// load data from local storage when offline
+document.addEventListener("DOMContentLoaded", function () {
+  if (!navigator.onLine) {
+    const storedGroceries = localStorage.getItem("groceries");
+    if (storedGroceries) {
+      let groceriesArr = JSON.parse(storedGroceries);
+      groceryList.innerHTML = "";
+      groceriesArr.map((item) => {
+        addNewItems(item);
+      })
+    }
+  }
+})
+
+// sync data to firebase when online
+window.addEventListener("online", function() {
+  const localData = localStorage.getItem("groceries");
+  if (localData) {
+    const groceriesArr = JSON.parse(localData);
+    groceryList.innerHTML = "";
+    groceriesArr.map((item) => {
+      addNewItems(item);
+    })
+  }
+})
 
 function addNewItems(item) {
   let itemID = item[0];
