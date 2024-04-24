@@ -18,6 +18,32 @@ const newItem = document.getElementById("groceryItem");
 const groceryList = document.getElementById("list");
 let draggedItem = null;
 
+// enable offline capabilities
+firebase
+  .firestore()
+  .enablePersistence()
+  .catch(function (err) {
+    if (err.code === "failed-precondition") {
+      console.log(
+        "Multiple tabs open, persistence can only be enabled in one tab at a a time."
+      );
+    } else if (err.code === "unimplemented") {
+      console.log("The current browser does not support persistence.");
+    }
+  });
+
+// register service worker
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/service-worker.js")
+    .then(function (registration) {
+      console.log("Registration successful, scope is:", registration.scope);
+    })
+    .catch(function (error) {
+      console.log("Service worker registration failed, error:", error);
+    });
+}
+
 document.getElementById("inputForm").addEventListener("submit", function (e) {
   e.preventDefault();
   let inputValue = newItem.value;
@@ -76,30 +102,6 @@ function addNewItems(item) {
 function clearInputField() {
   newItem.value = "";
 }
-
-// groceryList.addEventListener("dragstart", (e) => {
-//   if (e.target.classList.contains("list-item")) {
-//     e.target.classList.add("dragging");
-//   }
-// });
-
-// groceryList.addEventListener("dragend", (e) => {
-//   if (e.target.classList.contains("list-item")) {
-//     e.target.classList.remove("dragging");
-//   }
-// });
-
-// groceryList.addEventListener("dragover", (e) => {
-//   e.preventDefault();
-//   const afterElement = getDragAfterElement(groceryList, e.clientY);
-//   const draggable = document.querySelector(".dragging");
-
-//   if (afterElement == null) {
-//     groceryList.appendChild(draggable);
-//   } else {
-//     groceryList.insertBefore(draggable, afterElement);
-//   }
-// });
 
 function getDragAfterElement(container, y) {
   const draggableElements = [
